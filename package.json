@@ -1,0 +1,32 @@
+{
+  "name": "research-library",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nathan-maybrey/research-library.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nathan-maybrey/research-library/issues"
+  },
+  "homepage": "https://github.com/nathan-maybrey/research-library#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "govuk-frontend": "~3.4.0",
+    "mongoose": "^5.7.13"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "chai-http": "^4.3.0",
+    "mocha": "^6.2.2",
+    "nock": "^11.7.0",
+    "nodemon": "^2.0.1"
+  }
+}
