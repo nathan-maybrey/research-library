@@ -2,7 +2,7 @@ const path = require('path');
 const root = require('../../util/path');
 
 const getCollections = (req, res) => {
-    res.sendFile(path.join(root, 'src/views', 'collections.html'));
+    res.render(path.join(root, 'src/views', 'index.njk'));
 };
 
 module.exports.getCollections = getCollections;
