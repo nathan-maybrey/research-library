@@ -5,7 +5,7 @@ const plumber = require('gulp-plumber');
 
 function buildSass() {
     return src([
-        'src/assets/**/*.scss'
+        'src/assets/sass/**/*.scss'
     ])
     .pipe(plumber())
     .pipe(sass({

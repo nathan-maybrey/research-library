@@ -1,0 +1,33 @@
+{% extends 'govuk/template.njk' %}
+{% from "govuk/components/phase-banner/macro.njk" import govukPhaseBanner %}
+{% from "govuk/components/header/macro.njk" import govukHeader %}
+{% from "govuk/components/footer/macro.njk" import govukFooter %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+
+{% block head %}
+    <link href="assets/stylesheets/application.css" media="all" rel="stylesheet" type="text/css" />
+{% endblock %}
+
+{% block header %}
+  {{ govukHeader({
+    homepageUrl: "#",
+    containerClasses: "govuk-width-container",
+    serviceName: "Service name",
+    serviceUrl: "#",
+    navigation: [
+      {
+        href: "#1",
+        text: "Navigation item 1",
+        active: true
+      },
+      {
+        href: "#2",
+        text: "Navigation item 2"
+      },
+      {
+        href: "#3",
+        text: "Navigation item 3"
+      }
+    ]
+  }) }}
+{% endblock %}
