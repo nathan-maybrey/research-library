@@ -4,6 +4,8 @@
 {% from "govuk/components/footer/macro.njk" import govukFooter %}
 {% from "govuk/components/button/macro.njk" import govukButton %}
 
+{% block pageTitle %}User Research Library{% endblock %}
+
 {% block head %}
     <link href="assets/stylesheets/application.css" media="all" rel="stylesheet" type="text/css" />
 {% endblock %}
@@ -12,22 +14,23 @@
   {{ govukHeader({
     homepageUrl: "#",
     containerClasses: "govuk-width-container",
-    serviceName: "Service name",
-    serviceUrl: "#",
-    navigation: [
-      {
-        href: "#1",
-        text: "Navigation item 1",
-        active: true
-      },
-      {
-        href: "#2",
-        text: "Navigation item 2"
-      },
-      {
-        href: "#3",
-        text: "Navigation item 3"
-      }
-    ]
+    serviceName: "User Research Library",
+    serviceUrl: "../collections"
   }) }}
+{% endblock %}
+
+{% block main %}
+    <main id="main" role="main">
+      <div class="govuk-width-container">
+        {{ govukPhaseBanner({
+          tag: { text: "alpha" },
+          html: 'This is a new service – your <a class="govuk-link" href="#">feedback</a> will help us to improve it.'
+        }) }}
+        {% block languageSelect %}{% endblock %}
+        {% block backLink %}{% endblock %}
+        <div id="main-content" class="govuk-main-wrapper">
+          {% block content %}{% endblock %}
+        </div>
+      </div>
+    </main>
 {% endblock %}

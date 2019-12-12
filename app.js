@@ -7,6 +7,7 @@ const collectionRoutes = require('./src/controllers/collections/routes');
 
 nunjucks.configure([
     "src/views",
+    "src/views/helpers",
     "node_modules/govuk-frontend/"
 ], {
     autoescape: true,
