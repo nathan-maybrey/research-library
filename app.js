@@ -18,9 +18,9 @@ app.use('/collections', collectionRoutes);
 
 // Middleware to serve static assets
 app.set('view engine', 'html');
-app.use('/assets', express.static('./public'));
-app.use('/assets', express.static(path.join(__dirname, '/node_modules/govuk-frontend/govuk')));
-app.use('/assets', express.static(path.join(__dirname, '/node_modules/govuk-frontend/govuk/assets'), { maxage: 86400000 }));
+app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, '/node_modules/govuk-frontend/govuk')));
+app.use(express.static(path.join(__dirname, '/node_modules/govuk-frontend/govuk/assets'), { maxage: 86400000 }));
 
 app.listen(3000, () => {
     console.log("Server running on port 3000");

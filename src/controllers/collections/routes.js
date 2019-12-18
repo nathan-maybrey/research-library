@@ -4,5 +4,6 @@ const functions = require('./functions');
 const router = new express.Router();
 
 router.get('/', functions.getCollections);
+router.get('/test', functions.testForm);
 
 module.exports = router;
