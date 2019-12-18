@@ -1,7 +1,10 @@
+require('dotenv').config();
+
 const express = require('express');
 const app = express();
 const nunjucks  = require('nunjucks');
 const path = require('path');
+const mongoose = require('mongoose');
 
 const collectionRoutes = require('./src/controllers/collections/routes');
 
@@ -22,6 +25,17 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, '/node_modules/govuk-frontend/govuk')));
 app.use(express.static(path.join(__dirname, '/node_modules/govuk-frontend/govuk/assets'), { maxage: 86400000 }));
 
+//Database setup
+mongoose.connect(process.env.DATABASE_URL, { useNewUrlParser: true, useUnifiedTopology: true });
+
+const db = mongoose.connection;
+
+db.on('error', (error) => console.log(error));
+db.once('open', () => console.log('Connected to database'));
+
+app.use(express.json());
+
+//Start Server
 app.listen(3000, () => {
     console.log("Server running on port 3000");
 });
