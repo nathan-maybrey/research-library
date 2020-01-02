@@ -1,0 +1,106 @@
+{% extends '../helpers/govukTemplate.html' %}
+{% from "govuk/components/select/macro.njk" import govukSelect %}
+{% from "govuk/components/input/macro.njk" import govukInput %}
+{% from "govuk/components/fieldset/macro.njk" import govukFieldset %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/date-input/macro.njk" import govukDateInput %}
+{% from "govuk/components/textarea/macro.njk" import govukTextarea %}
+
+
+{% block content %}
+
+  {% call govukFieldset({
+    legend: {
+      text: "Create Project",
+      classes: "govuk-fieldset__legend--xl",
+      isPageHeading: true
+    }
+  }) %}
+
+  <form method="post" action="create-project" autocomplete="off">
+
+    {{ govukInput({
+      label: {
+        html: "Project Name"
+      },
+      id: "project-name",
+      name: "project-name"
+    }) }}
+
+    {{ govukSelect({
+        id: "phase",
+        name: "phase",
+        label: {
+            text: "Phase"
+        },
+        items: [
+            {
+                value: "alpha",
+                text: "Alpha",
+                selected: true                       
+            },
+            {
+                value: "beta",
+                text: "Beta"
+            },
+            {
+                value: "discovery",
+                text: "Discovery"
+            },
+            {
+                value: "live",
+                text: "Live"
+            }
+        ]
+    }) }}
+
+    {{ govukDateInput({
+      id: "date-started",
+      namePrefix: "date-started",
+      fieldset: {
+        legend: {
+          text: "Date Started",
+          isPageHeading: false
+        }
+      },
+      hint: {
+        text: "For example, 10 04 2007"
+      }
+    }) }}
+
+    {{ govukDateInput({
+      id: "date-ended",
+      namePrefix: "date-ended",
+      fieldset: {
+        legend: {
+          text: "Date Ended",
+          isPageHeading: false
+        }
+      },
+      hint: {
+        text: "For example, 10 04 2007"
+      }
+    }) }}
+
+    {{ govukTextarea({
+      name: "details",
+      id: "details",
+      label: {
+        text: "Details"
+      },
+      hint: {
+        text: "Do not include any sensitive information."
+      }
+    }) }}
+
+    {% endcall %}
+
+    {{ govukButton({
+      text: "Submit",
+      preventDoubleClick: true
+    }) }}
+
+  </form>
+
+    
+{% endblock %}

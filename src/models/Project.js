@@ -9,6 +9,15 @@ const ProjectSchema = new mongoose.Schema({
     projectPhase: {
         type: String,
         required: true
+    },
+    projectStartDate: {
+        type: Date
+    },
+    projectEndDate: {
+        type: Date
+    },
+    projectDetails: {
+        type: String
     }
 });
 

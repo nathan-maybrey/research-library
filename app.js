@@ -5,8 +5,11 @@ const app = express();
 const nunjucks  = require('nunjucks');
 const path = require('path');
 const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
 
 const collectionRoutes = require('./src/controllers/collections/routes');
+const projectRoutes = require('./src/controllers/projects/routes');
+
 
 nunjucks.configure([
     "src/views",
@@ -17,7 +20,14 @@ nunjucks.configure([
     express: app
 })
 
+// Add post middleware
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({
+  extended: false,
+}));
+
 app.use('/collections', collectionRoutes);
+app.use('/projects', projectRoutes);
 
 // Middleware to serve static assets
 app.set('view engine', 'html');
