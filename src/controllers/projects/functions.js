@@ -3,6 +3,10 @@ const root = require('../../util/path');
 
 const Project = require('../../models/Project');
 
+const viewProjectGet = (req, res) => {
+    res.render(path.join(root, 'src/views/pages', 'project.html'));
+};
+
 const createProjectGet = (req, res) => {
     res.render(path.join(root, 'src/views/pages', 'create-project.html'));
 };
@@ -30,5 +34,6 @@ const createProjectPost = async (req, res) => {
     }
 };
 
+module.exports.viewProjectGet = viewProjectGet;
 module.exports.createProjectGet = createProjectGet;
 module.exports.createProjectPost = createProjectPost;
