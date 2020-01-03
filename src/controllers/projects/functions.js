@@ -3,9 +3,15 @@ const root = require('../../util/path');
 
 const Project = require('../../models/Project');
 
-const viewProjectGet = (req, res) => {
-    res.render(path.join(root, 'src/views/pages', 'project.html'));
-};
+const viewAllProjects = async (req, res) => {
+    try {
+        const projects = await Project.find({}).exec();
+        console.log(projects);
+        res.render(path.join(root, 'src/views/pages', 'projects.html'), projects);
+    } catch (error) {
+        res.status(500).send(error);
+    }
+}
 
 const viewProjectById = async (req, res) => {
     try {
@@ -47,7 +53,7 @@ const createProjectPost = async (req, res) => {
     }
 };
 
-module.exports.viewProjectGet = viewProjectGet;
+module.exports.viewAllProjects = viewAllProjects;
 module.exports.viewProjectById = viewProjectById;
 module.exports.createProjectGet = createProjectGet;
 module.exports.createProjectPost = createProjectPost;

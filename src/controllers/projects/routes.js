@@ -3,9 +3,7 @@ const functions = require('./functions');
 
 const router = new express.Router();
 
-// router.get('/', functions.getProjects);
-
-router.get('/project', functions.viewProjectGet);
+router.get('/', functions.viewAllProjects);
 
 router.get('/project/:id', functions.viewProjectById);
 
