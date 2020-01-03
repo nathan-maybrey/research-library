@@ -7,6 +7,8 @@ const router = new express.Router();
 
 router.get('/project', functions.viewProjectGet);
 
+router.get('/project/:id', functions.viewProjectById);
+
 router.get('/create-project', functions.createProjectGet);
 router.post('/create-project', functions.createProjectPost); 
 
