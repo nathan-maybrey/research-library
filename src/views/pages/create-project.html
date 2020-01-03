@@ -35,20 +35,20 @@
         },
         items: [
             {
-                value: "alpha",
+                value: "Alpha",
                 text: "Alpha",
                 selected: true                       
             },
             {
-                value: "beta",
+                value: "Beta",
                 text: "Beta"
             },
             {
-                value: "discovery",
+                value: "Discovery",
                 text: "Discovery"
             },
             {
-                value: "live",
+                value: "Live",
                 text: "Live"
             }
         ]
@@ -94,6 +94,25 @@
     }) }}
 
     {% endcall %}
+
+    {{ govukInput({
+      label: {
+        html: "Key Contact Name"
+      },
+      classes: "govuk-!-width-two-thirds",
+      id: "key-contact-name",
+      name: "key-contact-name"
+    }) }}
+
+    {{ govukInput({
+      label: {
+        html: "Key Contact Email"
+      },
+      classes: "govuk-!-width-two-thirds",
+      id: "key-contact-email",
+      name: "key-contact-email",
+      type: "email"
+    }) }}
 
     {{ govukButton({
       text: "Submit",

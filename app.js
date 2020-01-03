@@ -6,19 +6,25 @@ const nunjucks  = require('nunjucks');
 const path = require('path');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const dateFilter = require('nunjucks-date-filter');
 
 const collectionRoutes = require('./src/controllers/collections/routes');
 const projectRoutes = require('./src/controllers/projects/routes');
 
+const initiateNunjucks = () => {
+    let env = nunjucks.configure([
+        "src/views",
+        "src/views/helpers",
+        "node_modules/govuk-frontend/"
+    ], {
+        autoescape: true,
+        express: app
+    })
 
-nunjucks.configure([
-    "src/views",
-    "src/views/helpers",
-    "node_modules/govuk-frontend/"
-], {
-    autoescape: true,
-    express: app
-})
+    env.addFilter('date', dateFilter);
+}
+
+initiateNunjucks();
 
 // Add post middleware
 app.use(bodyParser.json());

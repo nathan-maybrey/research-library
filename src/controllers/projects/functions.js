@@ -9,8 +9,9 @@ const viewProjectGet = (req, res) => {
 
 const viewProjectById = async (req, res) => {
     try {
-        const result = await Project.findById(req.params.id).exec();
-        res.status(200).send(result);
+        const project = await Project.findById(req.params.id).exec();
+        console.log(project);
+        res.render(path.join(root, 'src/views/pages', 'project.html'), project);
     } catch (error) {
         res.status(500).send(error);
     }
@@ -25,19 +26,22 @@ const constructDate = (day, month, year) => {
 };
 
 const createProjectPost = async (req, res) => {
+
     const data = req.body;
+
     const project = new Project({
         projectName: data['project-name'],
         projectPhase: data.phase,
         projectStartDate: constructDate(data['date-started-day'], data['date-started-month'], data['date-started-year']),
         projectEndDate: constructDate(data['date-ended-day'], data['date-ended-month'], data['date-ended-year']),
-        projectDetails: data.details
+        projectDetails: data.details,
+        keyContactName: data['key-contact-name'],
+        keyContactEmail: data['key-contact-email']
     });
 
     try {
         const newProject = await project.save();
-        res.status(201).json(newProject);
-
+        res.redirect(`/projects/project/${newProject.id}`);
     } catch (error) {
         res.status(400).json({ message: error.message });
     }

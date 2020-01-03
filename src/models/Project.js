@@ -18,6 +18,12 @@ const ProjectSchema = new mongoose.Schema({
     },
     projectDetails: {
         type: String
+    },
+    keyContactName: {
+        type: String
+    },
+    keyContactEmail: {
+        type: String
     }
 });
 
