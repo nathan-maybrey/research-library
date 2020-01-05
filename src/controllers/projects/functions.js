@@ -7,7 +7,7 @@ const viewAllProjects = async (req, res) => {
     try {
         const projects = await Project.find({}).exec();
         console.log(projects);
-        res.render(path.join(root, 'src/views/pages', 'projects.html'), projects);
+        res.render(path.join(root, 'src/views/pages', 'projects.html'), { projects: projects });
     } catch (error) {
         res.status(500).send(error);
     }

@@ -24,15 +24,16 @@
                             <a class="govuk-link" href="#">{{ project.projectName }}</a>
                         </h2>
 
-                        <p class="govuk-body">A project to understand the needs of community groups, residents and micro-business around accessing free or low cost meeting space in Hackney.</p>
+                        <p class="govuk-body">{{ project.projectDetails }}</p>
                     
-                        <p class="govuk-body">November 2018 - present</p>
+                        <p class="govuk-body">{{ project.projectStartDate | date('MMMM YYYY') }} - {{ project.projectEndDate | date('MMMM YYYY') }}</p>
                     
-                        <p class="govuk-body">Phase: Discovery</p>
+                        <p class="govuk-body">Phase: {{ project.projectPhase }}</p>
 
                         <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
                     </li>
                 {% endfor %}
+
             </ul>
         </div>
     </div>
