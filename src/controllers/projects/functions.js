@@ -6,7 +6,6 @@ const Project = require('../../models/Project');
 const viewAllProjects = async (req, res) => {
     try {
         const projects = await Project.find({}).exec();
-        console.log(projects);
         res.render(path.join(root, 'src/views/pages', 'projects.html'), { projects: projects });
     } catch (error) {
         res.status(500).send(error);
@@ -16,7 +15,6 @@ const viewAllProjects = async (req, res) => {
 const viewProjectById = async (req, res) => {
     try {
         const project = await Project.findById(req.params.id).exec();
-        console.log(project);
         res.render(path.join(root, 'src/views/pages', 'project.html'), project);
     } catch (error) {
         res.status(500).send(error);
