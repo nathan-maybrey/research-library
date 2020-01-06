@@ -5,6 +5,9 @@ const Project = require('../../models/Project');
 
 const viewAllProjects = async (req, res) => {
     try {
+        
+        // const { keywords, phase, document_type, started_before, started_after, status } = req.query;
+
         const projects = await Project.find({}).exec();
         res.render(path.join(root, 'src/views/pages', 'projects.html'), { projects: projects });
     } catch (error) {
@@ -51,7 +54,23 @@ const createProjectPost = async (req, res) => {
     }
 };
 
+const searchProjects = async (req, res) => {
+
+    const data = req.body;
+
+    console.log(data);
+
+    try {
+        const projects = await Project.find({}).exec();
+        res.render(path.join(root, 'src/views/pages', 'projects.html'), { projects: projects });
+    } catch (error) {
+        res.status(500).send(error);
+    }
+
+}
+
 module.exports.viewAllProjects = viewAllProjects;
 module.exports.viewProjectById = viewProjectById;
 module.exports.createProjectGet = createProjectGet;
 module.exports.createProjectPost = createProjectPost;
+module.exports.searchProjects = searchProjects;
