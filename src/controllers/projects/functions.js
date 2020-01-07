@@ -5,10 +5,13 @@ const Project = require('../../models/Project');
 
 const viewAllProjects = async (req, res) => {
     try {
+
+        console.log(req.query);
         
         // const { keywords, phase, document_type, started_before, started_after, status } = req.query;
 
-        const projects = await Project.find({}).exec();
+        const projects = await Project.find({ projectName: req.query['keywords'] }).exec();
+        console.log(projects);
         res.render(path.join(root, 'src/views/pages', 'projects.html'), { projects: projects });
     } catch (error) {
         res.status(500).send(error);
