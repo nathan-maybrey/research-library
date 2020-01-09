@@ -9,6 +9,7 @@ const signin = (req, res) => {
 
 const handleAuth = (req, res) => {
     console.log("Authenticated");
+    res.redirect('/projects');
 }
 
 module.exports.signin = signin;

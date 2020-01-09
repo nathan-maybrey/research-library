@@ -5,15 +5,10 @@ const Project = require('../../models/Project');
 
 const viewAllProjects = async (req, res) => {
     try {
-
-        // const date = req.query['started_after'] || ""
         const projects = await Project.find(
                 { 
                     projectName: { $regex: `${req.query['keywords']}`, $options: 'i' },
-                    projectPhase: { $regex: `${req.query['phase']}`, $options: 'i' },
-                    projectStartDate: { 
-                        "$gte": new Date(`${req.query['started_after']}`, 0, 1)
-                    }
+                    projectPhase: { $regex: `${req.query['phase']}`, $options: 'i' }
                 }
             ).exec();
         res.render(path.join(root, 'src/views/pages', 'projects.html'), { projects: projects });

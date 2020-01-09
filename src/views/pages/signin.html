@@ -1,9 +1,16 @@
 {% extends '../helpers/govukTemplate.html' %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
 
 {% block content %}
     <h1 class="govuk-heading-xl">Sign In</h1>
 
     <div class="govuk-grid-row">
+
+        {{ govukButton({
+            text: "Sign in with Google",
+            href: "/signin/google",
+            isStartButton: true
+        }) }}
         
     </div>
 {% endblock %}

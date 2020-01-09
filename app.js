@@ -9,13 +9,12 @@ const bodyParser = require('body-parser');
 const dateFilter = require('nunjucks-date-filter');
 
 const passport = require('passport');
-const GoogleStrategy = require('passport-google-oauth20').Strategy;
+const passportSetup = require('./src/config/passport-setup');
+const cookieSession = require('cookie-session');
 
 const collectionRoutes = require('./src/controllers/collections/routes');
 const projectRoutes = require('./src/controllers/projects/routes');
 const signinRoutes = require('./src/controllers/signin/routes');
-
-const User = require('./src/models/User');
 
 const initiateNunjucks = () => {
     let env = nunjucks.configure([
@@ -28,28 +27,19 @@ const initiateNunjucks = () => {
     })
 
     env.addFilter('date', dateFilter);
-}
+};
 
 initiateNunjucks();
 
-//Google OAuth Strategy
-passport.use(new GoogleStrategy({
-    clientID: process.env.GOOGLE_CLIENT_ID,
-    clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    callbackURL: "/signin/redirect"
-  },
-  async function(accessToken, refreshToken, profile, cb) {
-    const user = new User({
-        name: profile.displayName,
-        googleId: profile.id
-    });
+app.use(cookieSession({
+    maxAge: 24 * 60 * 60 * 1000,
+    keys: [process.env.COOKIE_KEY]
+}));
 
-    await User.findOneAndUpdate({ googleId: profile.id }, user, {
-        new: true,
-        upsert: true
-    });
-  }
-));
+// Initialize Passport and restore authentication state, if any, from the
+// session.
+app.use(passport.initialize());
+app.use(passport.session());
 
 // Add post middleware
 app.use(bodyParser.json());
@@ -57,9 +47,6 @@ app.use(bodyParser.urlencoded({
   extended: false,
 }));
 
-app.use('/collections', collectionRoutes);
-app.use('/projects', projectRoutes);
-app.use('/signin', signinRoutes);
 
 // Middleware to serve static assets
 app.set('view engine', 'html');
@@ -76,6 +63,20 @@ db.on('error', (error) => console.log(error));
 db.once('open', () => console.log('Connected to database'));
 
 app.use(express.json());
+
+app.use('/signin', signinRoutes);
+
+app.use((req, res, next) => {
+    if(req.user){
+        next();
+    } else {
+        console.log("User not authenticated... Redirecting");
+        res.redirect('/signin');
+    }
+})
+
+app.use('/collections', collectionRoutes);
+app.use('/projects', projectRoutes);
 
 //Start Server
 app.listen(3000, () => {
