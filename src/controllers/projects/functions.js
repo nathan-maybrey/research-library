@@ -6,12 +6,16 @@ const Project = require('../../models/Project');
 const viewAllProjects = async (req, res) => {
     try {
 
-        console.log(req.query);
-        
-        // const { keywords, phase, document_type, started_before, started_after, status } = req.query;
-
-        const projects = await Project.find({ projectName: req.query['keywords'] }).exec();
-        console.log(projects);
+        // const date = req.query['started_after'] || ""
+        const projects = await Project.find(
+                { 
+                    projectName: { $regex: `${req.query['keywords']}`, $options: 'i' },
+                    projectPhase: { $regex: `${req.query['phase']}`, $options: 'i' },
+                    projectStartDate: { 
+                        "$gte": new Date(`${req.query['started_after']}`, 0, 1)
+                    }
+                }
+            ).exec();
         res.render(path.join(root, 'src/views/pages', 'projects.html'), { projects: projects });
     } catch (error) {
         res.status(500).send(error);
