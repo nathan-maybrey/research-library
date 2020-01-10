@@ -1,16 +1,51 @@
 {% extends '../helpers/govukTemplate.html' %}
 {% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/fieldset/macro.njk" import govukFieldset %}
+{% from "govuk/components/radios/macro.njk" import govukRadios %}
 
 {% block content %}
-    <h1 class="govuk-heading-xl">Sign In</h1>
 
-    <div class="govuk-grid-row">
+    <form method="post">
+        {% call govukFieldset({
+            legend: {
+                text: "Prove your identity to continue",
+                classes: "govuk-fieldset__legend--xl",
+                isPageHeading: true
+            }
+        }) %}
+
+        <div class="govuk-grid-row">
+            <div class="govuk-grid-column-two-thirds">
+
+            {{ govukRadios({
+            idPrefix: "sign-in",
+            name: "sign-in",
+            hint: {
+                text: "You’ll need a HMRC Google account to prove your identity and access the service."
+            },
+            items: [
+                {
+                value: "google",
+                text: "Sign in with Google",
+                label: {
+                    classes: "govuk-label--s"
+                },
+                hint: {
+                    text: "Sign in with your HMRC Google account."
+                }
+                }
+            ]
+            }) }}
+
+            </div>
+        </div>
 
         {{ govukButton({
-            text: "Sign in with Google",
-            href: "/signin/google",
-            isStartButton: true
+            text: "Continue"
         }) }}
-        
-    </div>
+
+        {% endcall %}
+    </form>
+    
+    
 {% endblock %}
