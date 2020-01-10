@@ -32,7 +32,7 @@ const initiateNunjucks = () => {
 initiateNunjucks();
 
 app.use(cookieSession({
-    maxAge: 24 * 60 * 60 * 1000,
+    maxAge: 60 * 60 * 1000, //1 hour
     keys: [process.env.COOKIE_KEY]
 }));
 
