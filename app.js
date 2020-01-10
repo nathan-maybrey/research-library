@@ -14,7 +14,7 @@ const cookieSession = require('cookie-session');
 
 const collectionRoutes = require('./src/controllers/collections/routes');
 const projectRoutes = require('./src/controllers/projects/routes');
-const signinRoutes = require('./src/controllers/signin/routes');
+const authRoutes = require('./src/controllers/auth/routes');
 
 const initiateNunjucks = () => {
     let env = nunjucks.configure([
@@ -64,7 +64,12 @@ db.once('open', () => console.log('Connected to database'));
 
 app.use(express.json());
 
-app.use('/signin', signinRoutes);
+app.use('/signin', authRoutes);
+
+app.use('/signout', (req, res) => {
+    req.logout();
+    res.redirect('/signin');
+});
 
 app.use((req, res, next) => {
     if(req.user){

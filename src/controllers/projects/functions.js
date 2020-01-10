@@ -7,11 +7,11 @@ const viewAllProjects = async (req, res) => {
     try {
         const projects = await Project.find(
                 { 
-                    projectName: { $regex: `${req.query['keywords']}`, $options: 'i' },
-                    projectPhase: { $regex: `${req.query['phase']}`, $options: 'i' }
+                    projectName: { $regex: `${req.query['keywords'] || ''}`, $options: 'i' },
+                    projectPhase: { $regex: `${req.query['phase'] || ''}`, $options: 'i' }
                 }
             ).exec();
-        res.render(path.join(root, 'src/views/pages', 'projects.html'), { projects: projects });
+        res.render(path.join(root, 'src/views/pages', 'projects.html'), { projects: projects, user: req.user });
     } catch (error) {
         res.status(500).send(error);
     }
@@ -20,14 +20,14 @@ const viewAllProjects = async (req, res) => {
 const viewProjectById = async (req, res) => {
     try {
         const project = await Project.findById(req.params.id).exec();
-        res.render(path.join(root, 'src/views/pages', 'project.html'), project);
+        res.render(path.join(root, 'src/views/pages', 'project.html'), { project: project, user: req.user});
     } catch (error) {
         res.status(500).send(error);
     }
 }
 
 const createProjectGet = (req, res) => {
-    res.render(path.join(root, 'src/views/pages', 'create-project.html'));
+    res.render(path.join(root, 'src/views/pages', 'create-project.html'), { user: req.user });
 };
 
 const constructDate = (day, month, year) => {
@@ -64,7 +64,7 @@ const searchProjects = async (req, res) => {
 
     try {
         const projects = await Project.find({}).exec();
-        res.render(path.join(root, 'src/views/pages', 'projects.html'), { projects: projects });
+        res.render(path.join(root, 'src/views/pages', 'projects.html'), { projects: projects, user: req.user });
     } catch (error) {
         res.status(500).send(error);
     }

@@ -1,28 +1,39 @@
 {% extends '../helpers/govukTemplate.html' %}
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+
+{% block beforeContent %}
+  {{ govukBackLink({
+    href: "/projects",
+    text: "Back"
+  }) }}
+{% endblock %}
 
 {% block content %}
 
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
+
+            
+
             <span class="govuk-caption-xl">Project</span>
-            <h1 class="govuk-heading-xl">{{ projectName }}</h1>
+            <h1 class="govuk-heading-xl">{{ project.projectName }}</h1>
 
             <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
 
-            <p class="govuk-body" style="margin-bottom: 0;">{{ projectStartDate | date('MMMM YYYY') }} - {{ projectEndDate | date('MMMM YYYY') }}</p>
-            <p class="govuk-body">Status: {{ projectPhase }}</p>
+            <p class="govuk-body" style="margin-bottom: 0;">{{ project.projectStartDate | date('MMMM YYYY') }} - {{ project.projectEndDate | date('MMMM YYYY') }}</p>
+            <p class="govuk-body">Status: {{ project.projectPhase }}</p>
         </div>
     </div>
 
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <h2 class="govuk-heading-l">Details</h2>
-            <p class="govuk-body">{{ projectDetails }}</p>
+            <p class="govuk-body">{{ project.projectDetails }}</p>
             <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
             <h3 class="govuk-heading-l">Phases</h2>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
-                    <h4 class="govuk-heading-m">{{ projectPhase }}</h4>
+                    <h4 class="govuk-heading-m">{{ project.projectPhase }}</h4>
                 </div>
             </div>
         </div>
@@ -40,8 +51,8 @@
             <p class="govuk-body govuk-!-font-size-24">Key Contacts</p>
             <ul class="govuk-list">
                 <li>
-                    <p class="govuk-body govuk-!-font-weight-bold" style="margin-bottom: 0;">{{ keyContactName }}</p>
-                    <a class="govuk-link" href="mailto:{{ keyContactEmail }}">{{ keyContactEmail }}</a>
+                    <p class="govuk-body govuk-!-font-weight-bold" style="margin-bottom: 0;">{{ project.keyContactName }}</p>
+                    <a class="govuk-link" href="mailto:{{ project.keyContactEmail }}">{{ project.keyContactEmail }}</a>
                 </li>
             </ul>
         </div>
