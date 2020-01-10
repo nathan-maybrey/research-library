@@ -5,7 +5,14 @@
 {% from "govuk/components/button/macro.njk" import govukButton %}
 {% from "govuk/components/date-input/macro.njk" import govukDateInput %}
 {% from "govuk/components/textarea/macro.njk" import govukTextarea %}
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
 
+{% block beforeContent %}
+  {{ govukBackLink({
+    href: "/projects",
+    text: "Back"
+  }) }}
+{% endblock %}
 
 {% block content %}
 
