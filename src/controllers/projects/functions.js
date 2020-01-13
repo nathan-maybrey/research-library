@@ -50,7 +50,7 @@ const createProjectPost = async (req, res) => {
 
     try {
         const newProject = await project.save();
-        res.redirect(`/projects/project/${newProject.id}`);
+        res.redirect(`/projects/${newProject.id}`);
     } catch (error) {
         res.status(400).json({ message: error.message });
     }
