@@ -8,6 +8,10 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const dateFilter = require('nunjucks-date-filter');
 
+const i18next = require('i18next');
+const i18nextMiddleware = require('i18next-express-middleware');
+const i18nextBackend = require('i18next-node-fs-backend');
+
 const passport = require('passport');
 const passportSetup = require('./src/config/passport-setup');
 const cookieSession = require('cookie-session');
@@ -15,6 +19,31 @@ const cookieSession = require('cookie-session');
 const collectionRoutes = require('./src/controllers/collections/routes');
 const projectRoutes = require('./src/controllers/projects/routes');
 const authRoutes = require('./src/controllers/auth/routes');
+
+//i18n setup
+i18next
+  .use(i18nextBackend)
+  .use(i18nextMiddleware.LanguageDetector)
+  .init({
+    backend: {
+      loadPath: __dirname + '/locales/{{lng}}/{{ns}}.json',
+      addPath: __dirname + '/locales/{{lng}}/{{ns}}.missing.json'
+    },
+    fallbackLng: 'en',
+    preload: ['en'],
+    saveMissing: true,
+    useCookie: false,
+    ns: [
+        'app',
+        'projects',
+        'project',
+        'signin',
+        'createProject'
+    ]
+  });
+
+app.use(i18nextMiddleware.handle(i18next));
+
 
 const initiateNunjucks = () => {
     let env = nunjucks.configure([

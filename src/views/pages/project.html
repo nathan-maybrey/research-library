@@ -4,7 +4,7 @@
 {% block beforeContent %}
   {{ govukBackLink({
     href: "/projects",
-    text: "Back"
+    text: t("app:link.back")
   }) }}
 {% endblock %}
 
@@ -12,25 +12,22 @@
 
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
-
-            
-
-            <span class="govuk-caption-xl">Project</span>
+            <span class="govuk-caption-xl">{{ t("project:caption") }}</span>
             <h1 class="govuk-heading-xl">{{ project.projectName }}</h1>
 
             <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
 
             <p class="govuk-body" style="margin-bottom: 0;">{{ project.projectStartDate | date('MMMM YYYY') }} - {{ project.projectEndDate | date('MMMM YYYY') }}</p>
-            <p class="govuk-body">Status: {{ project.projectPhase }}</p>
+            <p class="govuk-body">{{ t("project:status") }}{{ project.projectPhase }}</p>
         </div>
     </div>
 
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
-            <h2 class="govuk-heading-l">Details</h2>
+            <h2 class="govuk-heading-l">{{ t("project:details") }}</h2>
             <p class="govuk-body">{{ project.projectDetails }}</p>
             <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
-            <h3 class="govuk-heading-l">Phases</h2>
+            <h3 class="govuk-heading-l">{{ t("project:phases") }}</h2>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
                     <h4 class="govuk-heading-m">{{ project.projectPhase }}</h4>
@@ -39,7 +36,7 @@
         </div>
 
         <div class="govuk-grid-column-one-third">
-            <h3 class="govuk-heading-m">Collection</h3>
+            <h3 class="govuk-heading-m">{{ t("project:collection") }}</h3>
             <ul class="govuk-list">
                 <li>
                     <a class="govuk-link govuk-!-font-size-24 govuk-!-font-weight-bold" href="#">Some Collection</a>
@@ -48,7 +45,7 @@
 
             <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
             
-            <p class="govuk-body govuk-!-font-size-24">Key Contacts</p>
+            <p class="govuk-body govuk-!-font-size-24">{{ t("project:key_contacts") }}</p>
             <ul class="govuk-list">
                 <li>
                     <p class="govuk-body govuk-!-font-weight-bold" style="margin-bottom: 0;">{{ project.keyContactName }}</p>

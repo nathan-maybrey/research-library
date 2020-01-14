@@ -10,7 +10,7 @@
 {% block beforeContent %}
   {{ govukBackLink({
     href: "/projects",
-    text: "Back"
+    text: t("app:link.back")
   }) }}
 {% endblock %}
 
@@ -18,7 +18,7 @@
 
   {% call govukFieldset({
     legend: {
-      text: "Create Project",
+      text: t("createProject:header"),
       classes: "govuk-fieldset__legend--xl",
       isPageHeading: true
     }
@@ -28,7 +28,7 @@
 
     {{ govukInput({
       label: {
-        html: "Project Name"
+        html: t("createProject:input.project_name.label")
       },
       id: "project-name",
       name: "project-name"
@@ -38,25 +38,25 @@
         id: "phase",
         name: "phase",
         label: {
-            text: "Phase"
+            text: t("createProject:select.phase.label")
         },
         items: [
             {
                 value: "Alpha",
-                text: "Alpha",
+                text: t("createProject:select.phase.items.alpha"),
                 selected: true                       
             },
             {
                 value: "Beta",
-                text: "Beta"
+                text: t("createProject:select.phase.items.beta")
             },
             {
                 value: "Discovery",
-                text: "Discovery"
+                text: t("createProject:select.phase.items.discovery")
             },
             {
                 value: "Live",
-                text: "Live"
+                text: t("createProject:select.phase.items.live")
             }
         ]
     }) }}
@@ -66,12 +66,12 @@
       namePrefix: "date-started",
       fieldset: {
         legend: {
-          text: "Date Started",
+          text: t("createProject:input.date_started.label"),
           isPageHeading: false
         }
       },
       hint: {
-        text: "For example, 10 04 2007"
+        text: t("createProject:input.date_started.hint")
       }
     }) }}
 
@@ -80,12 +80,12 @@
       namePrefix: "date-ended",
       fieldset: {
         legend: {
-          text: "Date Ended",
+          text: t("createProject:input.date_ended.label"),
           isPageHeading: false
         }
       },
       hint: {
-        text: "For example, 10 04 2007"
+        text: t("createProject:input.date_ended.hint")
       }
     }) }}
 
@@ -93,10 +93,10 @@
       name: "details",
       id: "details",
       label: {
-        text: "Details"
+        text: t("createProject:text_area.details.label")
       },
       hint: {
-        text: "Do not include any sensitive information."
+        text: t("createProject:text_area.details.hint")
       }
     }) }}
 
@@ -104,7 +104,7 @@
 
     {{ govukInput({
       label: {
-        html: "Key Contact Name"
+        html: t("createProject:input.key_contact_name.label")
       },
       classes: "govuk-!-width-two-thirds",
       id: "key-contact-name",
@@ -113,7 +113,7 @@
 
     {{ govukInput({
       label: {
-        html: "Key Contact Email"
+        html: t("createProject:input.key_contact_email.label")
       },
       classes: "govuk-!-width-two-thirds",
       id: "key-contact-email",
@@ -122,7 +122,7 @@
     }) }}
 
     {{ govukButton({
-      text: "Submit",
+      text: t("app:button.submit"),
       preventDoubleClick: true
     }) }}
 

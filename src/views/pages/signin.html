@@ -8,7 +8,7 @@
     <form method="post">
         {% call govukFieldset({
             legend: {
-                text: "Prove your identity to continue",
+                text: t("signin:header"),
                 classes: "govuk-fieldset__legend--xl",
                 isPageHeading: true
             }
@@ -21,17 +21,17 @@
             idPrefix: "sign-in",
             name: "sign-in",
             hint: {
-                text: "You’ll need a HMRC Google account to prove your identity and access the service."
+                text: t("signin:radio.hint")
             },
             items: [
                 {
                 value: "google",
-                text: "Sign in with Google",
+                text: t("signin:radio.item1.text"),
                 label: {
                     classes: "govuk-label--s"
                 },
                 hint: {
-                    text: "Sign in with your HMRC Google account."
+                    text: t("signin:radio.item1.hint")
                 }
                 }
             ]
@@ -41,7 +41,7 @@
         </div>
 
         {{ govukButton({
-            text: "Continue"
+            text: t("app:button.continue")
         }) }}
 
         {% endcall %}
