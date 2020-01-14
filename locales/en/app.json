@@ -1,8 +1,10 @@
 {
+    "service_name": "User Research Library",
     "button": {
         "continue": "Continue"
     },
     "link": {
-        "back": "Back"
+        "back": "Back",
+        "sign_out": "Sign out"
     }
 }
