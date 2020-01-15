@@ -6,6 +6,7 @@
 {% from "govuk/components/date-input/macro.njk" import govukDateInput %}
 {% from "govuk/components/textarea/macro.njk" import govukTextarea %}
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
 
 {% block beforeContent %}
   {{ govukBackLink({
@@ -15,6 +16,13 @@
 {% endblock %}
 
 {% block content %}
+
+  {% if errors %}
+    {{ govukErrorSummary({
+      titleText: t("createProject:errors.header"),
+      errorList: errors.errorSummary
+    }) }}
+  {% endif %}
 
   {% call govukFieldset({
     legend: {
@@ -31,7 +39,8 @@
         html: t("createProject:input.project_name.label")
       },
       id: "project-name",
-      name: "project-name"
+      name: "project-name",
+      errorMessage: errors.projectName
     }) }}
 
     {{ govukSelect({

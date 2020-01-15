@@ -1,10 +1,14 @@
 {
     "service_name": "User Research Library",
     "button": {
-        "continue": "Continue"
+        "continue": "Continue",
+        "submit": "Submit"
     },
     "link": {
         "back": "Back",
         "sign_out": "Sign out"
+    },
+    "error-message" : {
+        "visuallyHiddenText": "Error"
     }
 }

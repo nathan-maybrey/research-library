@@ -1,6 +1,8 @@
 const path = require('path');
 const root = require('../../util/path');
 
+const validation = require('../../../lib/validations/createProjectValidation');
+
 const Project = require('../../models/Project');
 
 const viewAllProjects = async (req, res) => {
@@ -36,23 +38,29 @@ const constructDate = (day, month, year) => {
 
 const createProjectPost = async (req, res) => {
 
-    const data = req.body;
+    const errors = validation.createProjectValidation(req.body);
 
-    const project = new Project({
-        projectName: data['project-name'],
-        projectPhase: data.phase,
-        projectStartDate: constructDate(data['date-started-day'], data['date-started-month'], data['date-started-year']),
-        projectEndDate: constructDate(data['date-ended-day'], data['date-ended-month'], data['date-ended-year']),
-        projectDetails: data.details,
-        keyContactName: data['key-contact-name'],
-        keyContactEmail: data['key-contact-email']
-    });
+    if(Object.keys(errors).length === 0){
+        const data = req.body;
 
-    try {
-        const newProject = await project.save();
-        res.redirect(`/projects/${newProject.id}`);
-    } catch (error) {
-        res.status(400).json({ message: error.message });
+        const project = new Project({
+            projectName: data['project-name'],
+            projectPhase: data.phase,
+            projectStartDate: constructDate(data['date-started-day'], data['date-started-month'], data['date-started-year']),
+            projectEndDate: constructDate(data['date-ended-day'], data['date-ended-month'], data['date-ended-year']),
+            projectDetails: data.details,
+            keyContactName: data['key-contact-name'],
+            keyContactEmail: data['key-contact-email']
+        });
+
+        try {
+            const newProject = await project.save();
+            res.redirect(`/projects/${newProject.id}`);
+        } catch (error) {
+            res.status(400).json({ message: error.message });
+        }
+    } else {
+        res.render(path.join(root, 'src/views/pages', 'create-project.html'), { user: req.user, errors: errors });
     }
 };
 

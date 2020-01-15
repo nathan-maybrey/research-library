@@ -1,8 +1,14 @@
 {
     "header": "Create Project",
+    "errors": {
+        "header": "There is a problem"
+    },
     "input": {
         "project_name": {
-            "label": "Project Name"
+            "label": "Project Name",
+            "errors": {
+                "required": "You must enter a project name."
+            }
         },
         "date_started": {
             "label": "Date Started",
