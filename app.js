@@ -16,7 +16,6 @@ const passport = require('passport');
 const passportSetup = require('./src/config/passport-setup');
 const cookieSession = require('cookie-session');
 
-const collectionRoutes = require('./src/controllers/collections/routes');
 const projectRoutes = require('./src/controllers/projects/routes');
 const authRoutes = require('./src/controllers/auth/routes');
 
@@ -107,9 +106,8 @@ app.use((req, res, next) => {
         console.log("User not authenticated... Redirecting");
         res.redirect('/signin');
     }
-})
+});
 
-app.use('/collections', collectionRoutes);
 app.use('/projects', projectRoutes);
 
 //Start Server
