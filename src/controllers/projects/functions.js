@@ -24,7 +24,9 @@ const viewAllProjects = async (req, res) => {
 const viewProjectById = async (req, res) => {
     try {
         const project = await Project.findById(req.params.id).exec();
-        res.render(path.join(root, 'src/views/pages', 'projectNew.html'), { project: project, user: req.user});
+        const documents = await Document.find({ projectId: req.params.id })
+
+        res.render(path.join(root, 'src/views/pages', 'projectNew.html'), { project: project, user: req.user, documents: documents });
     } catch (error) {
         res.status(500).send(error);
     }
@@ -32,10 +34,6 @@ const viewProjectById = async (req, res) => {
 
 const createProjectGet = (req, res) => {
     res.render(path.join(root, 'src/views/pages', 'create-project.html'), { user: req.user });
-};
-
-const constructDate = (day, month, year) => {
-    return `${year}-${month}-${day}`;
 };
 
 const createProjectPost = async (req, res) => {
