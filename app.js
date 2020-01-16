@@ -37,7 +37,8 @@ i18next
         'projects',
         'project',
         'signin',
-        'createProject'
+        'createProject',
+        'createDocument'
     ]
   });
 
@@ -78,9 +79,12 @@ app.use(bodyParser.urlencoded({
 
 // Middleware to serve static assets
 app.set('view engine', 'html');
+app.use('/assets', express.static('public'));
+app.use('/assets', express.static(path.join(__dirname, '/node_modules/govuk-frontend/govuk')));
+app.use('/assets', express.static(path.join(__dirname, '/node_modules/govuk-frontend/govuk/assets'), { maxage: 86400000 }));
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(express.static(path.join(__dirname, '/node_modules/govuk-frontend/govuk')));
-app.use(express.static(path.join(__dirname, '/node_modules/govuk-frontend/govuk/assets'), { maxage: 86400000 }));
+// app.use(express.static(path.join(__dirname, '/node_modules/govuk-frontend/govuk')));
+// app.use(express.static(path.join(__dirname, '/node_modules/govuk-frontend/govuk/assets'), { maxage: 86400000 }));
 
 //Database setup
 mongoose.connect(process.env.DATABASE_URL, { useNewUrlParser: true, useUnifiedTopology: true });

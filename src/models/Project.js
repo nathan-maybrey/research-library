@@ -6,23 +6,11 @@ const ProjectSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    projectPhase: {
+    projectDetails: {
         type: String,
         required: true
     },
-    projectStartDate: {
-        type: Date
-    },
-    projectEndDate: {
-        type: Date
-    },
-    projectDetails: {
-        type: String
-    },
-    keyContactName: {
-        type: String
-    },
-    keyContactEmail: {
+    projectPhase: {
         type: String
     }
 });

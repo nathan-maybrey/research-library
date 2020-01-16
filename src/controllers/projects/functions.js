@@ -1,9 +1,11 @@
 const path = require('path');
 const root = require('../../util/path');
 
-const validation = require('../../../lib/validations/createProjectValidation');
+const projectValidation = require('../../../lib/validations/createProjectValidation');
+const documentValidation = require('../../../lib/validations/createDocumentValidation');
 
 const Project = require('../../models/Project');
+const Document = require('../../models/Document');
 
 const viewAllProjects = async (req, res) => {
     try {
@@ -22,7 +24,7 @@ const viewAllProjects = async (req, res) => {
 const viewProjectById = async (req, res) => {
     try {
         const project = await Project.findById(req.params.id).exec();
-        res.render(path.join(root, 'src/views/pages', 'project.html'), { project: project, user: req.user});
+        res.render(path.join(root, 'src/views/pages', 'projectNew.html'), { project: project, user: req.user});
     } catch (error) {
         res.status(500).send(error);
     }
@@ -38,19 +40,15 @@ const constructDate = (day, month, year) => {
 
 const createProjectPost = async (req, res) => {
 
-    const errors = validation.createProjectValidation(req.body);
+    const errors = projectValidation.createProjectValidation(req.body);
 
     if(Object.keys(errors).length === 0){
         const data = req.body;
 
         const project = new Project({
             projectName: data['project-name'],
-            projectPhase: data.phase,
-            projectStartDate: constructDate(data['date-started-day'], data['date-started-month'], data['date-started-year']),
-            projectEndDate: constructDate(data['date-ended-day'], data['date-ended-month'], data['date-ended-year']),
             projectDetails: data.details,
-            keyContactName: data['key-contact-name'],
-            keyContactEmail: data['key-contact-email']
+            projectPhase: data.phase
         });
 
         try {
@@ -77,10 +75,43 @@ const searchProjects = async (req, res) => {
         res.status(500).send(error);
     }
 
-}
+};
+
+const createDocumentGet = (req, res) => {
+    res.render(path.join(root, 'src/views/pages', 'create-document.html'), { user: req.user });
+};
+
+const createDocumentPost = async (req, res) => {
+    const errors = documentValidation.createDocumentValidation(req.body);
+
+    console.log(req.params);
+
+    if(Object.keys(errors).length === 0){
+        const data = req.body;
+
+        const document = new Document({
+            documentName: data['document-name'],
+            documentLink: data['document-link'],
+            documentType: data['document-type'],
+            projectId: req.params.id
+        });
+
+        try {
+            const newDocument = await document.save();
+            console.log(newDocument);
+            // res.redirect(`/projects/${newProject.id}`);
+        } catch (error) {
+            res.status(400).json({ message: error.message });
+        }
+    } else {
+        res.render(path.join(root, 'src/views/pages', 'create-document.html'), { user: req.user, errors: errors });
+    }
+};
 
 module.exports.viewAllProjects = viewAllProjects;
 module.exports.viewProjectById = viewProjectById;
 module.exports.createProjectGet = createProjectGet;
 module.exports.createProjectPost = createProjectPost;
 module.exports.searchProjects = searchProjects;
+module.exports.createDocumentGet = createDocumentGet;
+module.exports.createDocumentPost = createDocumentPost;

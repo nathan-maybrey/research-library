@@ -1,0 +1,106 @@
+{% extends '../helpers/govukTemplate.html' %}
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+
+{% from "govuk/components/tabs/macro.njk" import govukTabs %}
+{% from "govuk/components/table/macro.njk" import govukTable %}
+
+{% block beforeContent %}
+  {{ govukBackLink({
+    href: "/projects",
+    text: t("app:link.back")
+  }) }}
+{% endblock %}
+
+{% block content %}
+
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+            <span class="govuk-caption-xl">{{ t("project:caption") }}</span>
+            <h1 class="govuk-heading-xl">{{ project.projectName }}</h1>
+
+
+
+            <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+
+            <h2 class="govuk-heading-m">Details</h2>
+
+            <p class="govuk-body govuk-!-padding-bottom-3">{{ project.projectDetails }}</p>
+
+            {% set documents %}
+                <h2 class="govuk-heading-l">Research Documents</h2>
+
+                <p class="govuk-body"><a href="/projects/{{ project.id }}/documents/create" class="govuk-link">Add a document</a></p>
+
+                {{ govukTable({
+                head: [
+                    {
+                        text: "Document name"
+                    },
+                    {
+                        text: "Document type"
+                    }
+                ],
+                rows: [
+                    [
+                        {
+                            text: "BTI User Personas"
+                        },
+                        {
+                            text: "User Personas"
+                        }
+                    ]
+                ]
+                }) }}
+            {% endset %}
+
+            {% set keyContacts %}
+                <h2 class="govuk-heading-l">Key Contacts</h2>
+
+                <p class="govuk-body"><a href="#" class="govuk-link">Add a contact</a></p>
+
+                {{ govukTable({
+                head: [
+                    {
+                        text: "Name"
+                    },
+                    {
+                        text: "Email address"
+                    }
+                ],
+                rows: [
+                    [
+                        {
+                            text: "David Francis"
+                        },
+                        {
+                            text: "dave.francis@gov.uk"
+                        }
+                    ]
+                ]
+                }) }}
+            {% endset %}
+
+            {{ govukTabs({
+                items: [
+                    {
+                        label: "Documents",
+                        id: "documents",
+                        panel: {
+                            html: documents
+                        }
+                    },
+                    {
+                        label: "Contacts",
+                        id: "keyContacts",
+                        panel: {
+                            html: keyContacts
+                        }
+                    }
+                ]
+            }) }}
+        </div>
+    </div>
+
+
+
+{% endblock %}

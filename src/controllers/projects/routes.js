@@ -9,5 +9,7 @@ router.get('/create', functions.createProjectGet);
 router.post('/create', functions.createProjectPost);
 
 router.get('/:id', functions.viewProjectById);
+router.get('/:id/documents/create', functions.createDocumentGet);
+router.post('/:id/documents/create', functions.createDocumentPost);
 
 module.exports = router;

@@ -9,37 +9,26 @@
             "errors": {
                 "required": "You must enter a project name."
             }
-        },
-        "date_started": {
-            "label": "Date Started",
-            "hint": "For example, 10 04 2007"
-        },
-        "date_ended": {
-            "label": "Date Ended",
-            "hint": "For example, 10 04 2007"
-        },
-        "key_contact_name": {
-            "label": "Key Contact Name"
-        },
-        "key_contact_email": {
-            "label": "Key Contact Email"
+        }
+    },
+    "text_area": {
+        "details": {
+            "label": "Details",
+            "hint": "Do not include any sensitive information.",
+            "errors": {
+                "required": "You must enter some details."
+            }
         }
     },
     "select": {
         "phase": {
-            "label": "Phase",
+            "label": "Current Phase",
             "items": {
                 "alpha": "Alpha",
                 "beta": "Beta",
                 "discovery": "Discovery",
                 "live": "Live"
             }
-        }
-    },
-    "text_area": {
-        "details": {
-            "label": "Details",
-            "hint": "Do not include any sensitive information."
         }
     }
 }
