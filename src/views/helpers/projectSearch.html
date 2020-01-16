@@ -1,6 +1,5 @@
 {% from "govuk/components/select/macro.njk" import govukSelect %}
 {% from "govuk/components/input/macro.njk" import govukInput %}
-{% from "govuk/components/checkboxes/macro.njk" import govukCheckboxes %}
 {% from "govuk/components/button/macro.njk" import govukButton %}
 
 <form method="get" action="/projects" autocomplete="off">
@@ -18,7 +17,7 @@
             id: "phase",
             name: "phase",
             label: {
-                text: "Phase"
+                text: "Current Phase"
             },
             items: [
                 {
@@ -43,149 +42,6 @@
                 }
             ]
         }) }}
-
-    {{ govukSelect({
-            id: "document_type",
-            name: "document_type",
-            label: {
-                text: "Document Type"
-            },
-            items: [
-                {
-                    text: "--",
-                    selected: true
-                },
-                {
-                    value: "5",
-                    text: "Audio recording"                        
-                },
-                {
-                    value: "6",
-                    text: "Customer journey map"
-                },
-                {
-                    value: "7",
-                    text: "Discussion guide"
-                },
-                {
-                    value: "8",
-                    text: "Insights"
-                },
-                {
-                    value: "9",
-                    text: "Interview transcript"
-                },
-                {
-                    value: "10",
-                    text: "Personas"
-                },
-                {
-                    value: "11",
-                    text: "Presentation"
-                },
-                {
-                    value: "12",
-                    text: "Research overview"
-                },
-                {
-                    value: "13",
-                    text: "Research plan"
-                },
-                {
-                    value: "14",
-                    text: "Service blueprint"
-                },
-                {
-                    value: "15",
-                    text: "Survey results"
-                },
-                {
-                    value: "16",
-                    text: "User needs"
-                },
-                {
-                    value: "17",
-                    text: "Video recording"
-                }
-            ]
-        }) }}
-
-        {{ govukSelect({
-            id: "started_before",
-            name: "started_before",
-            label: {
-                text: "Started Before"
-            },
-            items: [
-                {
-                    text: "--",
-                    selected: true
-                },
-                {
-                    value: "2017",
-                    text: "2017"                        
-                },
-                {
-                    value: "2018",
-                    text: "2018"
-                },
-                {
-                    value: "2019",
-                    text: "2019"
-                },
-                {
-                    value: "2020",
-                    text: "2020"
-                }
-            ]
-        }) }}
-
-    {{ govukSelect({
-            id: "started_after",
-            name: "started_after",
-            label: {
-                text: "Started After"
-            },
-            items: [
-                {
-                    text: "--",
-                    selected: true
-                },
-                {
-                    value: "2017",
-                    text: "2017"                        
-                },
-                {
-                    value: "2018",
-                    text: "2018"
-                },
-                {
-                    value: "2019",
-                    text: "2019"
-                },
-                {
-                    value: "2020",
-                    text: "2020"
-                }
-            ]
-        }) }}
-
-        {{ govukCheckboxes({
-            idPrefix: "in_progress",
-            name: "in_progress",
-            fieldset: {
-                legend: {
-                    classes: "govuk-fieldset"
-                }
-            },
-            items: [
-                {
-                value: "y",
-                text: "Only projects in progress"
-                }
-            ]
-        }) }}
-
     </div>
 
     {{ govukButton({
