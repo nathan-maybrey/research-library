@@ -38,7 +38,8 @@ i18next
         'project',
         'signin',
         'createProject',
-        'createDocument'
+        'createDocument',
+        'addContact'
     ]
   });
 

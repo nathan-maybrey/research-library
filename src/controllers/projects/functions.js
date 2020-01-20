@@ -3,9 +3,11 @@ const root = require('../../util/path');
 
 const projectValidation = require('../../../lib/validations/createProjectValidation');
 const documentValidation = require('../../../lib/validations/createDocumentValidation');
+const contactValidation = require('../../../lib/validations/addContactValidation');
 
 const Project = require('../../models/Project');
 const Document = require('../../models/Document');
+const Contact = require('../../models/Contact');
 
 const viewAllProjects = async (req, res) => {
     try {
@@ -25,8 +27,9 @@ const viewProjectById = async (req, res) => {
     try {
         const project = await Project.findById(req.params.id).exec();
         const documents = await Document.find({ projectId: req.params.id })
+        const contacts = await Contact.find({ projectId: req.params.id })
 
-        res.render(path.join(root, 'src/views/pages', 'projectNew.html'), { project: project, user: req.user, documents: documents });
+        res.render(path.join(root, 'src/views/pages', 'project.html'), { project: project, user: req.user, documents: documents, contacts: contacts });
     } catch (error) {
         res.status(500).send(error);
     }
@@ -96,8 +99,7 @@ const createDocumentPost = async (req, res) => {
 
         try {
             const newDocument = await document.save();
-            console.log(newDocument);
-            // res.redirect(`/projects/${newProject.id}`);
+            res.redirect(`/projects/${newDocument.projectId}`);
         } catch (error) {
             res.status(400).json({ message: error.message });
         }
@@ -106,6 +108,46 @@ const createDocumentPost = async (req, res) => {
     }
 };
 
+const addContactGet = (req, res) => {
+    res.render(path.join(root, 'src/views/pages', 'add-contact.html'), { user: req.user });
+};
+
+const addContactPost = async (req, res) => {
+    const errors = contactValidation.addContactValidation(req.body);
+
+    if(Object.keys(errors).length === 0){
+        const data = req.body;
+
+        const existingContact = await Contact.findOne({ contactEmail: data['contact-email'] });
+
+        if(existingContact){
+            await Contact.update(
+                { "_id": existingContact.id },
+                { $push: { projectId: req.params.id }}
+            );
+
+            res.redirect(`/projects/${req.params.id}`);
+            
+        } else {
+            const contact = new Contact({
+                contactName: data['contact-name'],
+                contactEmail: data['contact-email'],
+                projectId: req.params.id
+            });
+
+            try {
+                await contact.save();
+                res.redirect(`/projects/${req.params.id}`);
+            } catch (error) {
+                res.status(400).json({ message: error.message });
+            }
+        }
+    } else {
+        res.render(path.join(root, 'src/views/pages', 'add-contact.html'), { user: req.user, errors: errors });
+    }
+};
+
+
 module.exports.viewAllProjects = viewAllProjects;
 module.exports.viewProjectById = viewProjectById;
 module.exports.createProjectGet = createProjectGet;
@@ -113,3 +155,5 @@ module.exports.createProjectPost = createProjectPost;
 module.exports.searchProjects = searchProjects;
 module.exports.createDocumentGet = createDocumentGet;
 module.exports.createDocumentPost = createDocumentPost;
+module.exports.addContactGet = addContactGet;
+module.exports.addContactPost = addContactPost;

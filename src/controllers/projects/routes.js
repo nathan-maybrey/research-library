@@ -11,5 +11,7 @@ router.post('/create', functions.createProjectPost);
 router.get('/:id', functions.viewProjectById);
 router.get('/:id/documents/create', functions.createDocumentGet);
 router.post('/:id/documents/create', functions.createDocumentPost);
+router.get('/:id/contacts/add', functions.addContactGet);
+router.post('/:id/contacts/add', functions.addContactPost);
 
 module.exports = router;
