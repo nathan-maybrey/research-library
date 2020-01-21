@@ -15,7 +15,6 @@ passport.use(new GoogleStrategy({
 
     if(existingUser){
         //User already exists in DB
-        console.log(`User is: ${existingUser}`);
         cb(null, existingUser);
     } else {
         //Create new record in DB
@@ -23,8 +22,6 @@ passport.use(new GoogleStrategy({
             name: profile.displayName,
             googleId: profile.id
         }).save();
-
-        console.log(`New user created: ${newUser}`);
         cb(null, newUser);
     }
 
