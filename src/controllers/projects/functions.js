@@ -76,8 +76,13 @@ const searchProjects = async (req, res) => {
 
 };
 
-const createDocumentGet = (req, res) => {
-    res.render(path.join(root, 'src/views/pages', 'create-document.html'), { user: req.user });
+const createDocumentGet = async (req, res) => {
+    try{
+        const project = await Project.findById(req.params.id).exec();
+        res.render(path.join(root, 'src/views/pages', 'create-document.html'), { user: req.user, project: project });
+    } catch (error) {
+        res.status(500).send(error);
+    }
 };
 
 const createDocumentPost = async (req, res) => {
@@ -130,8 +135,14 @@ const deleteDocumentPost = async (req, res) => {
     }
 };
 
-const addContactGet = (req, res) => {
-    res.render(path.join(root, 'src/views/pages', 'add-contact.html'), { user: req.user });
+const addContactGet = async (req, res) => {
+    try{
+        const project = await Project.findById(req.params.id).exec();
+        res.render(path.join(root, 'src/views/pages', 'add-contact.html'), { user: req.user, project: project });
+    } catch (error) {
+        res.status(500).send(error);
+    }
+    
 };
 
 const addContactPost = async (req, res) => {
