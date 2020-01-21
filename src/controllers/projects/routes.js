@@ -19,4 +19,7 @@ router.post('/:id/documents/:documentId/delete', functions.deleteDocumentPost);
 router.get('/:id/contacts/add', functions.addContactGet);
 router.post('/:id/contacts/add', functions.addContactPost);
 
+router.get('/:id/contacts/:contactId/delete', functions.deleteContactGet);
+router.post('/:id/contacts/:contactId/delete', functions.deleteContactPost);
+
 module.exports = router;

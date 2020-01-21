@@ -169,6 +169,35 @@ const addContactPost = async (req, res) => {
     }
 };
 
+const deleteContactGet = async (req, res) => {
+    try {
+        const project = await Project.findById(req.params.id).exec();
+        const contact = await Contact.findById(req.params.contactId).exec();
+
+        res.render(path.join(root, 'src/views/pages', 'delete-contact.html'), { user: req.user, project: project, contact: contact });
+    } catch (error) {
+        res.status(500).send(error);
+    }
+};
+
+const deleteContactPost = async (req, res) => {
+    try{
+        await Contact.update(
+            { "_id": req.params.contactId },
+            { $pull: { projectId: req.params.id }}
+        );
+
+        const project = await Project.findById(req.params.id).exec();
+        const documents = await Document.find({ projectId: req.params.id });
+        const contacts = await Contact.find({ projectId: req.params.id });
+
+        res.render(path.join(root, 'src/views/pages', 'project.html'), { user: req.user, project: project, documents: documents, contacts: contacts });
+
+    } catch (error) {
+        res.status(500).send(error);
+    }
+};
+
 
 module.exports.viewAllProjects = viewAllProjects;
 module.exports.viewProjectById = viewProjectById;
@@ -181,3 +210,5 @@ module.exports.deleteDocumentGet = deleteDocumentGet;
 module.exports.deleteDocumentPost = deleteDocumentPost;
 module.exports.addContactGet = addContactGet;
 module.exports.addContactPost = addContactPost;
+module.exports.deleteContactGet = deleteContactGet;
+module.exports.deleteContactPost = deleteContactPost;

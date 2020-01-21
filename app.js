@@ -40,7 +40,8 @@ i18next
         'createProject',
         'createDocument',
         'addContact',
-        'deleteDocument'
+        'deleteDocument',
+        'deleteContact'
     ]
   });
 
