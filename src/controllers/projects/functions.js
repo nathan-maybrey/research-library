@@ -26,10 +26,10 @@ const viewAllProjects = async (req, res) => {
 const viewProjectById = async (req, res) => {
     try {
         const project = await Project.findById(req.params.id).exec();
-        const documents = await Document.find({ projectId: req.params.id })
-        const contacts = await Contact.find({ projectId: req.params.id })
+        const documents = await Document.find({ projectId: req.params.id });
+        const contacts = await Contact.find({ projectId: req.params.id });
 
-        res.render(path.join(root, 'src/views/pages', 'project.html'), { project: project, user: req.user, documents: documents, contacts: contacts });
+        res.render(path.join(root, 'src/views/pages', 'project.html'), { user: req.user, project: project, documents: documents, contacts: contacts });
     } catch (error) {
         res.status(500).send(error);
     }
@@ -67,8 +67,6 @@ const searchProjects = async (req, res) => {
 
     const data = req.body;
 
-    console.log(data);
-
     try {
         const projects = await Project.find({}).exec();
         res.render(path.join(root, 'src/views/pages', 'projects.html'), { projects: projects, user: req.user });
@@ -84,8 +82,6 @@ const createDocumentGet = (req, res) => {
 
 const createDocumentPost = async (req, res) => {
     const errors = documentValidation.createDocumentValidation(req.body);
-
-    console.log(req.params);
 
     if(Object.keys(errors).length === 0){
         const data = req.body;
@@ -105,6 +101,32 @@ const createDocumentPost = async (req, res) => {
         }
     } else {
         res.render(path.join(root, 'src/views/pages', 'create-document.html'), { user: req.user, errors: errors });
+    }
+};
+
+const deleteDocumentGet = async (req, res) => {
+    try {
+        const project = await Project.findById(req.params.id).exec();
+        const document = await Document.findById(req.params.documentId).exec();
+
+        res.render(path.join(root, 'src/views/pages', 'delete-document.html'), { user: req.user, project: project, document: document });
+    } catch (error) {
+        res.status(500).send(error);
+    }
+};
+
+const deleteDocumentPost = async (req, res) => {
+    try {
+        await Document.findByIdAndDelete(req.params.documentId);
+
+        const project = await Project.findById(req.params.id).exec();
+        const documents = await Document.find({ projectId: req.params.id });
+        const contacts = await Contact.find({ projectId: req.params.id });
+
+        res.render(path.join(root, 'src/views/pages', 'project.html'), { user: req.user, project: project, documents: documents, contacts: contacts });
+
+    } catch (error) {
+        res.status(500).send(error);
     }
 };
 
@@ -155,5 +177,7 @@ module.exports.createProjectPost = createProjectPost;
 module.exports.searchProjects = searchProjects;
 module.exports.createDocumentGet = createDocumentGet;
 module.exports.createDocumentPost = createDocumentPost;
+module.exports.deleteDocumentGet = deleteDocumentGet;
+module.exports.deleteDocumentPost = deleteDocumentPost;
 module.exports.addContactGet = addContactGet;
 module.exports.addContactPost = addContactPost;

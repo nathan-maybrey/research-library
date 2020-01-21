@@ -9,8 +9,13 @@ router.get('/create', functions.createProjectGet);
 router.post('/create', functions.createProjectPost);
 
 router.get('/:id', functions.viewProjectById);
+
 router.get('/:id/documents/create', functions.createDocumentGet);
 router.post('/:id/documents/create', functions.createDocumentPost);
+
+router.get('/:id/documents/:documentId/delete', functions.deleteDocumentGet);
+router.post('/:id/documents/:documentId/delete', functions.deleteDocumentPost);
+
 router.get('/:id/contacts/add', functions.addContactGet);
 router.post('/:id/contacts/add', functions.addContactPost);
 

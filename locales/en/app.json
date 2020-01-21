@@ -2,11 +2,13 @@
     "service_name": "User Research Library",
     "button": {
         "continue": "Continue",
-        "submit": "Submit"
+        "submit": "Submit",
+        "confirm-removal": "Confirm removal"
     },
     "link": {
         "back": "Back",
-        "sign_out": "Sign out"
+        "sign-out": "Sign out",
+        "cancel": "Cancel"
     },
     "error-message" : {
         "visuallyHiddenText": "Error"
