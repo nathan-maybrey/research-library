@@ -5,8 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon app.js",
-    "build": "gulp generateAssets"
+    "start": "node app.js",
+    "build": "gulp generateAssets",
+    "startDev": "nodemon app.js"
   },
   "repository": {
     "type": "git",
