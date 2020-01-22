@@ -102,7 +102,6 @@ app.use(bodyParser.urlencoded({
   extended: false,
 }));
 
-
 // Middleware to serve static assets
 app.set('view engine', 'html');
 app.use('/assets', express.static('public'));
@@ -121,6 +120,14 @@ db.on('error', (error) => console.log(error));
 db.once('open', () => console.log('Connected to database'));
 
 app.use(express.json());
+
+app.use((req, res, next) => {
+    if(req.url == '/') {
+        res.redirect('/signin');
+        return;
+    }
+    next();
+});
 
 app.use('/signin', authRoutes);
 

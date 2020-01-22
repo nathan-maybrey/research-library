@@ -4,7 +4,11 @@ const root = require('../../util/path');
 const passport = require('passport');
 
 const signin = (req, res) => {
-    res.render(path.join(root, 'src/views/pages', 'signin.html'), { user: req.user });
+    if(req.user){
+        res.redirect('/projects');
+    } else {
+        res.render(path.join(root, 'src/views/pages', 'signin.html'), { user: req.user });
+    }
 };
 
 const redirectToAuth = (req, res) => {

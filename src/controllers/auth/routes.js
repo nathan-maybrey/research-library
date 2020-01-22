@@ -12,6 +12,4 @@ router.get('/google', passport.authenticate('google', { scope: ['profile'] }));
 
 router.get('/redirect', passport.authenticate('google'), functions.handleAuth);
 
-router.get('/')
-
 module.exports = router;
