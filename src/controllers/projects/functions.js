@@ -209,6 +209,10 @@ const deleteContactPost = async (req, res) => {
     }
 };
 
+const editProjectGet = (req, res) => {
+    
+}
+
 
 module.exports.viewAllProjects = viewAllProjects;
 module.exports.viewProjectById = viewProjectById;
@@ -223,3 +227,5 @@ module.exports.addContactGet = addContactGet;
 module.exports.addContactPost = addContactPost;
 module.exports.deleteContactGet = deleteContactGet;
 module.exports.deleteContactPost = deleteContactPost;
+module.exports.editProjectGet = editProjectGet;
+module.exports.editProjectPost = editProjectPost;

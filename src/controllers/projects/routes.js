@@ -10,6 +10,9 @@ router.post('/create', functions.createProjectPost);
 
 router.get('/:id', functions.viewProjectById);
 
+router.get('/:id/edit', functions.editProjectGet);
+router.post('/:id/edit', functions.editProjectPost);
+
 router.get('/:id/documents/create', functions.createDocumentGet);
 router.post('/:id/documents/create', functions.createDocumentPost);
 
