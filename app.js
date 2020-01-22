@@ -19,6 +19,29 @@ const cookieSession = require('cookie-session');
 const projectRoutes = require('./src/controllers/projects/routes');
 const authRoutes = require('./src/controllers/auth/routes');
 
+const utils = require('./lib/utils');
+
+//Env variables
+const username = process.env.USERNAME;
+const password = process.env.PASSWORD;
+const env = process.env.NODE_ENV || 'development';
+const cookieKey = process.env.COOKIE_KEY;
+const mongoUri = process.env.MONGODB_URI;
+const port = process.env.PORT;
+
+// Force HTTPS on production. Do this before using basicAuth to avoid
+// asking for username/password twice (for `http`, then `https`).
+const isSecure = (env === 'production');
+if (isSecure) {
+  app.use(utils.forceHttps);
+  app.set('trust proxy', 1) // needed for secure cookies on heroku
+};
+
+// Ask for username and password on production
+if (env === 'production') {
+    app.use(utils.basicAuth(username, password));
+};
+
 //i18n setup
 i18next
   .use(i18nextBackend)
@@ -65,7 +88,7 @@ initiateNunjucks();
 
 app.use(cookieSession({
     maxAge: 60 * 60 * 1000, //1 hour
-    keys: [process.env.COOKIE_KEY]
+    keys: [cookieKey]
 }));
 
 // Initialize Passport and restore authentication state, if any, from the
@@ -90,7 +113,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 // app.use(express.static(path.join(__dirname, '/node_modules/govuk-frontend/govuk/assets'), { maxage: 86400000 }));
 
 //Database setup
-mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect(mongoUri, { useNewUrlParser: true, useUnifiedTopology: true });
 
 const db = mongoose.connection;
 
@@ -118,8 +141,8 @@ app.use((req, res, next) => {
 app.use('/projects', projectRoutes);
 
 //Start Server
-app.listen(process.env.PORT || 3000, () => {
-    console.log(`Server running on port ${process.env.PORT || 3000}`);
+app.listen(port || 3000, () => {
+    console.log(`Server running on port ${port || 3000}`);
 });
 
 module.exports = app;
