@@ -2,6 +2,7 @@ const path = require('path');
 const root = require('../../util/path');
 
 const createProjectValidation = require('../../../lib/validations/createProjectValidation');
+const editProjectValidation = require('../../../lib/validations/editProjectValidation');
 const documentValidation = require('../../../lib/validations/createDocumentValidation');
 const contactValidation = require('../../../lib/validations/addContactValidation');
 
@@ -219,8 +220,28 @@ const editProjectGet = async (req, res) => {
     }
 };
 
-const editProjectPost = (req, res) => {
-    console.log("Post")
+const editProjectPost = async (req, res) => {
+    const errors = editProjectValidation.editProjectValidation(req.body);
+
+    if(Object.keys(errors).length === 0){
+        const data = req.body;
+
+        try {
+            await Project.update(
+                { "_id": req.params.id },
+                { 
+                    projectName: data['project-name'],
+                    projectDetails: data.details,
+                    projectPhase: data.phase
+                }
+            );
+            res.redirect(`/projects/${req.params.id}`);
+        } catch (error) {
+            res.status(400).json({ message: error.message });
+        }
+    } else {
+        res.render(path.join(root, 'src/views/pages', 'edit-project.html'), { user: req.user, errors: errors });
+    }
 };
 
 
