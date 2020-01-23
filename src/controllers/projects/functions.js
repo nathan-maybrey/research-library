@@ -1,7 +1,8 @@
 const path = require('path');
 const root = require('../../util/path');
 
-const projectValidation = require('../../../lib/validations/createProjectValidation');
+const createProjectValidation = require('../../../lib/validations/createProjectValidation');
+const editProjectValidation = require('../../../lib/validations/editProjectValidation');
 const documentValidation = require('../../../lib/validations/createDocumentValidation');
 const contactValidation = require('../../../lib/validations/addContactValidation');
 
@@ -41,7 +42,7 @@ const createProjectGet = (req, res) => {
 
 const createProjectPost = async (req, res) => {
 
-    const errors = projectValidation.createProjectValidation(req.body);
+    const errors = createProjectValidation.createProjectValidation(req.body);
 
     if(Object.keys(errors).length === 0){
         const data = req.body;
@@ -209,6 +210,40 @@ const deleteContactPost = async (req, res) => {
     }
 };
 
+const editProjectGet = async (req, res) => {
+    try {
+        const project = await Project.findById(req.params.id).exec();
+
+        res.render(path.join(root, 'src/views/pages', 'edit-project.html'), { user: req.user, project: project });
+    } catch (error) {
+        res.status(500).send(error);
+    }
+};
+
+const editProjectPost = async (req, res) => {
+    const errors = editProjectValidation.editProjectValidation(req.body);
+
+    if(Object.keys(errors).length === 0){
+        const data = req.body;
+
+        try {
+            await Project.update(
+                { "_id": req.params.id },
+                { 
+                    projectName: data['project-name'],
+                    projectDetails: data.details,
+                    projectPhase: data.phase
+                }
+            );
+            res.redirect(`/projects/${req.params.id}`);
+        } catch (error) {
+            res.status(400).json({ message: error.message });
+        }
+    } else {
+        res.render(path.join(root, 'src/views/pages', 'edit-project.html'), { user: req.user, errors: errors });
+    }
+};
+
 
 module.exports.viewAllProjects = viewAllProjects;
 module.exports.viewProjectById = viewProjectById;
@@ -223,3 +258,5 @@ module.exports.addContactGet = addContactGet;
 module.exports.addContactPost = addContactPost;
 module.exports.deleteContactGet = deleteContactGet;
 module.exports.deleteContactPost = deleteContactPost;
+module.exports.editProjectGet = editProjectGet;
+module.exports.editProjectPost = editProjectPost;

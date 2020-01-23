@@ -64,7 +64,8 @@ i18next
         'createDocument',
         'addContact',
         'deleteDocument',
-        'deleteContact'
+        'deleteContact',
+        'editProject'
     ]
   });
 
