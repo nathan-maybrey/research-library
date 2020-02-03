@@ -7,7 +7,6 @@
     },
     "link": {
         "back": "Back",
-        "sign-out": "Sign out",
         "cancel": "Cancel"
     },
     "error-message" : {
