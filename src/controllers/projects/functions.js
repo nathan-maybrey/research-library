@@ -18,7 +18,7 @@ const viewAllProjects = async (req, res) => {
                     projectPhase: { $regex: `${req.query['phase'] || ''}`, $options: 'i' }
                 }
             ).exec();
-        res.render(path.join(root, 'src/views/pages', 'projects.html'), { projects: projects, user: req.user });
+        res.render(path.join(root, 'src/views/pages', 'projects.html'), { projects: projects });
     } catch (error) {
         res.status(500).send(error);
     }
@@ -30,14 +30,14 @@ const viewProjectById = async (req, res) => {
         const documents = await Document.find({ projectId: req.params.id });
         const contacts = await Contact.find({ projectId: req.params.id });
 
-        res.render(path.join(root, 'src/views/pages', 'project.html'), { user: req.user, project: project, documents: documents, contacts: contacts });
+        res.render(path.join(root, 'src/views/pages', 'project.html'), { project: project, documents: documents, contacts: contacts });
     } catch (error) {
         res.status(500).send(error);
     }
 }
 
 const createProjectGet = (req, res) => {
-    res.render(path.join(root, 'src/views/pages', 'create-project.html'), { user: req.user });
+    res.render(path.join(root, 'src/views/pages', 'create-project.html'));
 };
 
 const createProjectPost = async (req, res) => {
@@ -60,7 +60,7 @@ const createProjectPost = async (req, res) => {
             res.status(400).json({ message: error.message });
         }
     } else {
-        res.render(path.join(root, 'src/views/pages', 'create-project.html'), { user: req.user, errors: errors });
+        res.render(path.join(root, 'src/views/pages', 'create-project.html'), { errors: errors });
     }
 };
 
@@ -70,7 +70,7 @@ const searchProjects = async (req, res) => {
 
     try {
         const projects = await Project.find({}).exec();
-        res.render(path.join(root, 'src/views/pages', 'projects.html'), { projects: projects, user: req.user });
+        res.render(path.join(root, 'src/views/pages', 'projects.html'), { projects: projects });
     } catch (error) {
         res.status(500).send(error);
     }
@@ -80,7 +80,7 @@ const searchProjects = async (req, res) => {
 const createDocumentGet = async (req, res) => {
     try{
         const project = await Project.findById(req.params.id).exec();
-        res.render(path.join(root, 'src/views/pages', 'create-document.html'), { user: req.user, project: project });
+        res.render(path.join(root, 'src/views/pages', 'create-document.html'), { project: project });
     } catch (error) {
         res.status(500).send(error);
     }
@@ -106,7 +106,7 @@ const createDocumentPost = async (req, res) => {
             res.status(400).json({ message: error.message });
         }
     } else {
-        res.render(path.join(root, 'src/views/pages', 'create-document.html'), { user: req.user, errors: errors });
+        res.render(path.join(root, 'src/views/pages', 'create-document.html'), { errors: errors });
     }
 };
 
@@ -115,7 +115,7 @@ const deleteDocumentGet = async (req, res) => {
         const project = await Project.findById(req.params.id).exec();
         const document = await Document.findById(req.params.documentId).exec();
 
-        res.render(path.join(root, 'src/views/pages', 'delete-document.html'), { user: req.user, project: project, document: document });
+        res.render(path.join(root, 'src/views/pages', 'delete-document.html'), { project: project, document: document });
     } catch (error) {
         res.status(500).send(error);
     }
@@ -129,7 +129,7 @@ const deleteDocumentPost = async (req, res) => {
         const documents = await Document.find({ projectId: req.params.id });
         const contacts = await Contact.find({ projectId: req.params.id });
 
-        res.render(path.join(root, 'src/views/pages', 'project.html'), { user: req.user, project: project, documents: documents, contacts: contacts });
+        res.render(path.join(root, 'src/views/pages', 'project.html'), { project: project, documents: documents, contacts: contacts });
 
     } catch (error) {
         res.status(500).send(error);
@@ -139,7 +139,7 @@ const deleteDocumentPost = async (req, res) => {
 const addContactGet = async (req, res) => {
     try{
         const project = await Project.findById(req.params.id).exec();
-        res.render(path.join(root, 'src/views/pages', 'add-contact.html'), { user: req.user, project: project });
+        res.render(path.join(root, 'src/views/pages', 'add-contact.html'), { project: project });
     } catch (error) {
         res.status(500).send(error);
     }
@@ -177,7 +177,7 @@ const addContactPost = async (req, res) => {
             }
         }
     } else {
-        res.render(path.join(root, 'src/views/pages', 'add-contact.html'), { user: req.user, errors: errors });
+        res.render(path.join(root, 'src/views/pages', 'add-contact.html'), { errors: errors });
     }
 };
 
@@ -186,7 +186,7 @@ const deleteContactGet = async (req, res) => {
         const project = await Project.findById(req.params.id).exec();
         const contact = await Contact.findById(req.params.contactId).exec();
 
-        res.render(path.join(root, 'src/views/pages', 'delete-contact.html'), { user: req.user, project: project, contact: contact });
+        res.render(path.join(root, 'src/views/pages', 'delete-contact.html'), { project: project, contact: contact });
     } catch (error) {
         res.status(500).send(error);
     }
@@ -203,7 +203,7 @@ const deleteContactPost = async (req, res) => {
         const documents = await Document.find({ projectId: req.params.id });
         const contacts = await Contact.find({ projectId: req.params.id });
 
-        res.render(path.join(root, 'src/views/pages', 'project.html'), { user: req.user, project: project, documents: documents, contacts: contacts });
+        res.render(path.join(root, 'src/views/pages', 'project.html'), { project: project, documents: documents, contacts: contacts });
 
     } catch (error) {
         res.status(500).send(error);
@@ -214,7 +214,7 @@ const editProjectGet = async (req, res) => {
     try {
         const project = await Project.findById(req.params.id).exec();
 
-        res.render(path.join(root, 'src/views/pages', 'edit-project.html'), { user: req.user, project: project });
+        res.render(path.join(root, 'src/views/pages', 'edit-project.html'), { project: project });
     } catch (error) {
         res.status(500).send(error);
     }
@@ -240,7 +240,7 @@ const editProjectPost = async (req, res) => {
             res.status(400).json({ message: error.message });
         }
     } else {
-        res.render(path.join(root, 'src/views/pages', 'edit-project.html'), { user: req.user, errors: errors });
+        res.render(path.join(root, 'src/views/pages', 'edit-project.html'), { errors: errors });
     }
 };
 

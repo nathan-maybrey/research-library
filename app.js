@@ -12,12 +12,7 @@ const i18next = require('i18next');
 const i18nextMiddleware = require('i18next-express-middleware');
 const i18nextBackend = require('i18next-node-fs-backend');
 
-const passport = require('passport');
-const passportSetup = require('./src/config/passport-setup');
-const cookieSession = require('cookie-session');
-
 const projectRoutes = require('./src/controllers/projects/routes');
-const authRoutes = require('./src/controllers/auth/routes');
 
 const utils = require('./lib/utils');
 
@@ -59,7 +54,6 @@ i18next
         'app',
         'projects',
         'project',
-        'signin',
         'createProject',
         'createDocument',
         'addContact',
@@ -86,16 +80,6 @@ const initiateNunjucks = () => {
 };
 
 initiateNunjucks();
-
-app.use(cookieSession({
-    maxAge: 60 * 60 * 1000, //1 hour
-    keys: [cookieKey]
-}));
-
-// Initialize Passport and restore authentication state, if any, from the
-// session.
-app.use(passport.initialize());
-app.use(passport.session());
 
 // Add post middleware
 app.use(bodyParser.json());
@@ -124,26 +108,10 @@ app.use(express.json());
 
 app.use((req, res, next) => {
     if(req.url == '/') {
-        res.redirect('/signin');
+        res.redirect('/projects');
         return;
     }
     next();
-});
-
-app.use('/signin', authRoutes);
-
-app.use('/signout', (req, res) => {
-    req.logout();
-    res.redirect('/signin');
-});
-
-app.use((req, res, next) => {
-    if(req.user){
-        next();
-    } else {
-        console.log("User not authenticated... Redirecting");
-        res.redirect('/signin');
-    }
 });
 
 app.use('/projects', projectRoutes);
